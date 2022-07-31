@@ -28,7 +28,7 @@ app.use(cors());
 
 
 app.get('/', (req, resp) => {
-    resp.send("it is working!")
+    resp.send("it's WORKING!")
 })
 
 app.post('/signin', (req, res) =>
