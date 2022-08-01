@@ -21,7 +21,7 @@ const handleSignin = (req, resp, database, bcrypt) => {
                 }
             });   
         })  
-        .catch(err => resp.status(400).json('Unable to SignIn'))
+        .catch(err => resp.status(400).json('Wrong username or password'))
 };
 
 module.exports = {
