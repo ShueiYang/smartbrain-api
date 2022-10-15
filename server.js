@@ -48,7 +48,7 @@ app.post('/imageurl', (req, res) =>
 
 let port = process.env.PORT;
 if (port == null || port == "") {
-    port = 3001
+    port = 8080
 }
 
 app.listen(port, () => {
