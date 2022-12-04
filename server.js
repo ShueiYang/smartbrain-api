@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -19,15 +20,14 @@ const database = knex({
     }
 });
 
-
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
 
-app.get('/', (req, resp) => {
-    resp.send("IT'S WORKING!")
+app.get('/', (req, res) => {
+    res.send("IT'S WORKING!")
 })
 
 app.post('/signin', (req, res) =>

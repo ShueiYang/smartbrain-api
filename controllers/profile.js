@@ -1,17 +1,17 @@
 
-const handleProfileGet = (req, resp, database) => {
+const handleProfileGet = (req, res, database) => {
     const { id } = req.params;
 
     database.select('*').from('users')
             .where({ id })
             .then(user => {
                 if (user.length) {
-                    resp.json(user[0])
+                    res.json(user[0])
                 } else {
-                    resp.status(400).json('Not Found')
+                    res.status(404).json('Not Found')
                 }
             })
-            .catch(err => resp.status(400).json('Error getting user'))
+            .catch(err => res.status(400).json(`${err}`))
 }
 
 module.exports = {

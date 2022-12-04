@@ -1,9 +1,9 @@
 
-const handleSignin = (req, resp, database, bcrypt) => {
+const handleSignin = (req, res, database, bcrypt) => {
     const { email, password } = req.body
     
     if(!email||!password) {
-        return resp.status(400).json('Wrong username or password')
+        return res.status(400).json('Please provide a username or password')
     }
     
     database.select('email', 'hash').from('login')
@@ -14,16 +14,16 @@ const handleSignin = (req, resp, database, bcrypt) => {
                 if (result) {
                     return database.select('*').from ('users')
                             .where('email', '=', email)
-                            .then(user => resp.json(user[0]))
-                            .catch(err => resp.status(400).json('unable to get user'))
+                            .then(user => res.json(user[0]))
+                            .catch(err => res.status(500).json(`Unable to get user: ${err}`))
                 } else {
-                    resp.status(400).json('Wrong username or password')
+                    res.status(401).json('Wrong username or password')
                 }
             });   
         })  
-        .catch(err => resp.status(400).json('Wrong username or password'))
+        .catch(err => res.status(400).json(`${err}`))
 };
 
 module.exports = {
-    handleSignin: handleSignin
-}
+    handleSignin
+};

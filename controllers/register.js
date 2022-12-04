@@ -1,12 +1,12 @@
 
 
-const handleRegister = (req, resp, database, bcrypt, saltRounds) => {
+const handleRegister = (req, res, database, bcrypt, saltRounds) => {
     const { name, email, password, checkpassword } = req.body
 
     if(!name||!email||!password||!checkpassword) {
-        return resp.status(400).json('Incorrect form submission')
+        return res.status(400).json('Incorrect form submission')
     }else if (password !== checkpassword) {
-        return resp.status(400).json('Password not match')
+        return res.status(400).json('Password not match')
     }
     
     bcrypt.hash(password, saltRounds, function (err, hash) {
@@ -28,17 +28,16 @@ const handleRegister = (req, resp, database, bcrypt, saltRounds) => {
                             joined: new Date()
                         })
                         .then(user => {
-                            resp.json(user[0])
+                            res.json(user[0])
                         })
                     )
                     .then(trx.commit) 
                     .catch(trx.rollback)  
             })
-
-                .catch (err =>
-                    resp.status(400).json('Unable to register or email already being used'));
+                .catch(err => res.status(400).json(`Unable to register: ${err}`));
     });
 };
+
 module.exports = {
-    handleRegister: handleRegister
+    handleRegister
 };
