@@ -34,7 +34,7 @@ const handleRegister = (req, res, database, bcrypt, saltRounds) => {
                     .then(trx.commit) 
                     .catch(trx.rollback)  
             })
-                .catch(err => res.status(400).json(`Unable to register: ${err}`));
+                .catch(err => res.status(400).json(`Unable to register: Email already being used`));
     });
 };
 
