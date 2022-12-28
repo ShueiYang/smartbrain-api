@@ -1,41 +1,39 @@
 
 
-const handleRegister = (req, res, database, bcrypt, saltRounds) => {
+const handleRegister = async (req, res, database, bcrypt, saltRounds) => {
     const { name, email, password, checkpassword } = req.body
 
     if(!name||!email||!password||!checkpassword) {
         return res.status(400).json('Incorrect form submission')
-    }else if (password !== checkpassword) {
+    } else if (password !== checkpassword) {
         return res.status(400).json('Password not match')
     }
-    
-    bcrypt.hash(password, saltRounds, function (err, hash) {
+    try{
+        const hash = await bcrypt.hash(password, saltRounds)
 
-        database.transaction(trx => {
-                trx.insert({
-                    hash: hash,
-                    email: email
-                })
-                    .into('login')
-                    .returning('email')
+        await database.transaction( async trx => {
                     
-                    .then(loginEmail => 
-                        trx('users')
-                        .returning('*')
-                        .insert({
-                            name: name,
-                            email: loginEmail[0].email,
-                            joined: new Date()
-                        })
-                        .then(user => {
-                            res.json(user[0])
-                        })
-                    )
-                    .then(trx.commit) 
-                    .catch(trx.rollback)  
+            const loginEmail = await trx.insert({
+                hash: hash,
+                email: email
             })
-                .catch(err => res.status(400).json(`Unable to register: Email already being used`));
-    });
+                .into("login")
+                .returning("email")
+                .catch((err)=> {throw new Error("Email already being used")});  
+            
+            const user = await trx.insert({
+                    name: name,
+                    email: loginEmail[0].email,
+                    joined: new Date()
+                })
+                .into("users")
+                .returning("*");
+            
+            return res.json(user[0]);
+        });
+    } catch (err) {
+        res.status(409).json(`${err}`);
+    }
 };
 
 module.exports = {
