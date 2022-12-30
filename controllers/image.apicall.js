@@ -1,3 +1,4 @@
+const database = require("../database/postgres");
 
 const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 
@@ -34,7 +35,7 @@ const handleApiCall = (req, res) => {
     );
 };
 
-const handleImage = (req, res, database) => {
+const handleImage = (req, res) => {
     const { id } = req.body;
 
     database('users').where('id', '=', id)

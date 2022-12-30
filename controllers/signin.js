@@ -1,10 +1,13 @@
+const bcrypt = require('bcrypt');
+const database = require('../database/postgres');
 
-const handleSignin = async (req, res, database, bcrypt) => {
+
+const handleSignin = async (req, res) => {
     const { email, password } = req.body
     
     if(!email||!password) {
         return res.status(400).json('Please provide a username or password')
-    }
+    }  
     try {
         const data = await database.select('email', 'hash')
             .from('login')

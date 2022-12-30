@@ -1,5 +1,7 @@
+const database = require('../database/postgres');
 
-const handleGoogleProfile = (req, res, database) => {
+
+const handleGoogleProfile = (req, res) => {
     const { email } = req.body
 
     database.select('*')

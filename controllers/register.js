@@ -1,6 +1,9 @@
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const database = require('../database/postgres');
 
 
-const handleRegister = async (req, res, database, bcrypt, saltRounds) => {
+const handleRegister = async (req, res) => {
     const { name, email, password, checkpassword } = req.body
 
     if(!name||!email||!password||!checkpassword) {
