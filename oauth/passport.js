@@ -11,7 +11,8 @@ const config = {
 passport.use(new googleStrategy({
         clientID: config.CLIENT_ID,
         clientSecret: config.CLIENT_SECRET,
-        callbackURL: "/v1/auth/google/callback"
+        callbackURL: "/v1/auth/google/callback",
+        proxy: true
     },
     verifiyCallback
 ));
