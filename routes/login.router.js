@@ -16,6 +16,7 @@ loginRouter.get("/google/callback",
         failureRedirect: "/failure",
     }),
     (req, res) => {
+        console.log("callback:", req.user.id)
         res.redirect(process.env.FRONTEND_URL);
     }
 );
@@ -30,7 +31,7 @@ loginRouter.get("/logout", (req, res, next) => {
         if(err) {
             return next(err);
         }
-        res.status(204).send();
+        res.status(204).send();  //No need to send information
     }); 
 });
 
