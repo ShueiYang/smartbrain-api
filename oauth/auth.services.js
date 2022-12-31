@@ -2,11 +2,9 @@ const database = require("../database/postgres");
 
 
 function checkLoggedIn(req, res, next) {
-    const isLoggedIn = req.isAuthenticated(); console.log(isLoggedIn)
-    if(!isLoggedIn && !req.user) {
+    const isLoggedIn = req.isAuthenticated() && req.user
+    if(!isLoggedIn) {
         return res.status(204).send();  //No need to send information
-    } else if (isLoggedIn && !req.user) {
-        return res.status(401).json("Unable to authenticated or load User");
     }
     next();
 };
