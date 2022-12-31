@@ -27,7 +27,7 @@ app.use(session({
     cookie: { 
         secure: "auto",
         maxAge: 1000 * 60 * 60 * 2,
-        sameSite: "none"
+        sameSite: "none",
     },
 }));
 
@@ -36,6 +36,7 @@ app.use(passport.session());
 
 
 app.get("/", (req, res) => {
+    console.log(app.get("env"))
     res.send("👋🌏✨🌈🦄")
 });
 
