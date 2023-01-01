@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const database = require('../database/postgres');
+const { database } = require('../database/postgres');
 
 
 const handleSignin = async (req, res) => {

@@ -16,7 +16,7 @@ loginRouter.get("/google/callback",
         failureRedirect: "/failure",
     }),
     (req, res) => {
-        res.redirect(process.env.FRONTEND_URL);
+        res.redirect(process.env.FRONTEND_BASE_URL);
     }
 );
 

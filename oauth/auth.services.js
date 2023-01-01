@@ -1,19 +1,19 @@
-const database = require("../database/postgres");
+const { database } = require("../database/postgres");
 
 
 function checkLoggedIn(req, res, next) {
     const isLoggedIn = req.isAuthenticated() && req.user
-    console.log(req.session)
     if(!isLoggedIn) {
         console.log("User is unable to authenticate...")
         return res.status(204).send();  //No need to send information
     }
+    console.log("User is authenticate!")
     next();
 };
 
 
 async function verifiyCallback(accessToken, refreshToken, profile, done) {
-    try{
+    try{ 
         await database.transaction(async trx => {
             const result = await trx("oauth").where("profile_id", "=", profile.id);
             if(result.length === 0) {

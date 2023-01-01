@@ -1,4 +1,4 @@
-const database = require('../database/postgres');
+const { database } = require('../database/postgres');
 
 
 const handleGoogleProfile = (req, res) => {

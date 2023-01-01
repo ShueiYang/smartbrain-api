@@ -1,5 +1,7 @@
 
 const knex = require('knex');
+const session = require('express-session');
+const KnexSessionStore = require('connect-session-knex')(session);
 
 const database = knex({
     client: 'pg',
@@ -8,7 +10,13 @@ const database = knex({
         ssl: {
             rejectUnauthorized: false
           }
-    }
+    },
+    pool: { min: 1, max: 12 }
 });
 
-module.exports = database;
+const pgStore = new KnexSessionStore({
+    knex: database,
+    tablename: 'sessions',
+});
+
+module.exports = { database,  pgStore,};

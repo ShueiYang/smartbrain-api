@@ -1,4 +1,4 @@
-const database = require("../database/postgres");
+const { database } = require("../database/postgres");
 
 const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 

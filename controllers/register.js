@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const database = require('../database/postgres');
+const { database } = require('../database/postgres');
 
 
 const handleRegister = async (req, res) => {
