@@ -17,7 +17,8 @@ app.use(express.json());
 app.use(cors({
     origin: process.env.FRONTEND_BASE_URL,
     methods: "GET, POST, PUT, OPTIONS, HEAD",
-    credentials: true
+    credentials: true,
+    optionsSuccessStatus: 200
 }));
 
 app.set('trust proxy', 1)
