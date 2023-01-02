@@ -33,6 +33,7 @@ async function verifiyCallback(accessToken, refreshToken, profile, done) {
         })
     } catch (err) {
         console.error(err)
+        return done(null, null);
     };
     done(null, profile);
 };

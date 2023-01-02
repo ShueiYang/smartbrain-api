@@ -13,7 +13,7 @@ loginRouter.get("/google",
 
 loginRouter.get("/google/callback", 
     passport.authenticate("google", {
-        failureRedirect: "/failure",
+        failureRedirect: "/v1/auth/failure",
     }),
     (req, res) => {
         res.redirect(process.env.FRONTEND_BASE_URL);
@@ -22,6 +22,10 @@ loginRouter.get("/google/callback",
 
 loginRouter.get("/login", checkLoggedIn, (req, res) => {
     res.status(200).json(req.user);
+});
+
+loginRouter.get("/failure", (req, res) => {
+    res.redirect(`${process.env.FRONTEND_BASE_URL}/loginfailed`);
 });
 
 loginRouter.get("/logout", (req, res, next) => {
