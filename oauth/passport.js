@@ -20,7 +20,6 @@ passport.use(new googleStrategy({
 
 
 passport.serializeUser((user, done) => {
-    console.log("SERIALIZE:", user.id)
     done(null, user);
 });
 
@@ -32,7 +31,6 @@ passport.deserializeUser(async (user, done) => {
         if(!result.length) {
             throw new Error("User not found...")
         }
-        console.log("DESERIALIZE:", user.id)
         done(null, user);    
     } catch (err) {
         console.log(err)

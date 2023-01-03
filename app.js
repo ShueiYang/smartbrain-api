@@ -18,7 +18,6 @@ app.use(cors({
     origin: process.env.FRONTEND_BASE_URL,
     methods: "GET, POST, PUT, OPTIONS, HEAD",
     credentials: true,
-    optionsSuccessStatus: 200
 }));
 
 app.set('trust proxy', 1)
@@ -28,7 +27,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: { 
         secure: "auto",
-        maxAge: 1000 * 30,   //1000 * 60 * 60 * 2
+        maxAge: 1000 * 60 * 60 * 2,
         sameSite: "none",
     },
     store: pgStore,
