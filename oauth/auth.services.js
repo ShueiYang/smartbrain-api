@@ -5,7 +5,8 @@ function checkLoggedIn(req, res, next) {
     const isLoggedIn = req.isAuthenticated();
     if(!isLoggedIn) {
         console.log("User is not authenticated...")
-        return res.status(204).send();  //No need to send information
+        return res.status(401).json(`You must authenticate to get access, or some error occur 
+            and you're unable to log in, you can retry with different browsers or contact the admin.`)  
     }
     console.log("Authenticate successfully!")
     next();
