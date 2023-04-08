@@ -11,7 +11,7 @@ const handleGoogleProfile = (req, res) => {
                 if (user.length) {
                     res.json(user[0])
                 } else {
-                    res.status(404).json('User Not Found')
+                    res.status(404).json({message: 'User Not Found'})
                 }
             })
             .catch(err => res.status(400).json(`${err}`))

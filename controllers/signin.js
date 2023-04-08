@@ -6,7 +6,7 @@ const handleSignin = async (req, res) => {
     const { email, password } = req.body
     
     if(!email||!password) {
-        return res.status(400).json('Please provide a username or password')
+        return res.status(400).json({message: 'Please provide a username or password'})
     }  
     try {
         const data = await database.select('email', 'hash')
@@ -14,12 +14,12 @@ const handleSignin = async (req, res) => {
             .where('email', '=', email);
         
         if(!data.length) {
-            return res.status(401).json('Wrong username or password');
+            return res.status(401).json({message: 'Wrong username or password'});
         }
         const result = await bcrypt.compare(password, data[0].hash);            
                 
         if(!result) {
-            return res.status(401).json('Wrong username or password'); 
+            return res.status(401).json({message: 'Wrong username or password'}); 
         } 
         const user = await database.select('*')
             .from ('users')

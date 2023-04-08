@@ -4,12 +4,12 @@ const { database } = require('../database/postgres');
 
 
 const handleRegister = async (req, res) => {
-    const { name, email, password, checkpassword } = req.body
-
-    if(!name||!email||!password||!checkpassword) {
-        return res.status(400).json('Incorrect form submission')
-    } else if (password !== checkpassword) {
-        return res.status(400).json('Password not match')
+    const { name, email, password, checkPassword } = req.body
+    
+    if(!name||!email||!password||!checkPassword) {
+        return res.status(400).json({message: 'Incorrect form submission'})
+    } else if (password !== checkPassword) {
+        return res.status(400).json({message: 'Password not match'})
     }
     try{
         const hash = await bcrypt.hash(password, saltRounds)
@@ -22,7 +22,7 @@ const handleRegister = async (req, res) => {
             })
                 .into("login")
                 .returning("email")
-                .catch((err)=> {throw new Error("Email already being used")});  
+                .catch((err)=> {throw new Error({message: "Email already being used"})});  
             
             const user = await trx.insert({
                     name: name,
