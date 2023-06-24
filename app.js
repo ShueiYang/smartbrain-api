@@ -30,7 +30,7 @@ app.use(session({
     cookie: { 
         secure: "auto",
         maxAge: 1000 * 60 * 60 * 2,
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
+        sameSite: process.env.NODE_ENV === "development" ? "lax" : "none"
     },
     store: pgStore,
 }));
