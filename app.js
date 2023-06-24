@@ -30,7 +30,7 @@ app.use(session({
     cookie: { 
         secure: "auto",
         maxAge: 1000 * 60 * 60 * 2,
-        sameSite: "none",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax"
     },
     store: pgStore,
 }));
@@ -45,5 +45,8 @@ app.get("/", (req, res) => {
 
 app.use("/v1", api);
 
+app.all("*", (req, res) => {
+    res.status(404).json({ message: "This route does not exist" });
+});
 
 module.exports = app;
